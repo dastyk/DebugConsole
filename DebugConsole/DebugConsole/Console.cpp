@@ -3,17 +3,17 @@
 namespace DebugUtils
 {
 
-	Console::Console()
+	DebugConsole::DebugConsole()
 	{
 	}
 
 
-	Console::~Console()
+	DebugConsole::~DebugConsole()
 	{
 	}
 
 	/*Copies the default Command Functions to the 0 slot in the commands map*/
-	const void Console::Init(const Command_Structure* defaultCommandFunctions)
+	const void DebugConsole::Init(const Command_Structure* defaultCommandFunctions)
 	{
 #ifdef _DEBUG
 		if (defaultCommandFunctions->commandFunction == nullptr)
@@ -24,12 +24,12 @@ namespace DebugUtils
 		_commands[0] = *defaultCommandFunctions;
 		return void();
 	}
-	const void Console::Shutdown()
+	const void DebugConsole::Shutdown()
 	{
 		return void();
 	}
 	/*Hash the identifier and add the command*/
-	const void Console::AddCommand(char * identifier, const Command_Structure * command)
+	const void DebugConsole::AddCommand(const char* identifier, const Command_Structure * command)
 	{
 
 		uint32_t hash = std::hash<std::string>{}(identifier);
@@ -48,7 +48,7 @@ namespace DebugUtils
 		return void();
 	}
 	/* Adds the command with the already hashed identifer*/
-	const void Console::AddCommand(uint32_t indentifer, const Command_Structure * command)
+	const void DebugConsole::AddCommand(uint32_t identifier, const Command_Structure * command)
 	{
 #ifdef _DEBUG
 		if (command->commandFunction == nullptr)
@@ -57,16 +57,16 @@ namespace DebugUtils
 #endif
 
 
-		_commands[indentifer] = *command;
+		_commands[identifier] = *command;
 		if (command->commandHelpFunction == nullptr)
-			_commands[indentifer].commandHelpFunction = _commands[0].commandHelpFunction;
+			_commands[identifier].commandHelpFunction = _commands[0].commandHelpFunction;
 
 
 		return void();
 	}
 
 	/*Splits the command and calls the correct command function */
-	const void Console::InterpretCommand(char * command)
+	const void DebugConsole::InterpretCommand(char * command)
 	{
 
 		int argc = 0;
@@ -83,23 +83,23 @@ namespace DebugUtils
 				for (int i = 1; i < argc; i++) {
 					if (argv[i][0] == '-') {
 						if (argv[i][1] == 'h') {
-							find->second.commandHelpFunction(argc, argv);
+							find->second.commandHelpFunction(find->second.userData, argc, argv);
 							return;
 						}
 					}
 				}
-				find->second.commandFunction(argc, argv);
+				find->second.commandFunction(find->second.userData, argc, argv);
 			}
 			else
 			{
-				_commands[0].commandFunction(argc, argv);
+				_commands[0].commandFunction(find->second.userData, argc, argv);
 			}
 		}
 
 		return void();
 	}
 	/* Split the command string into the arg array*/
-	const void Console::_ParseCommandString(char* command, int& argc, char** argv)
+	const void DebugConsole::_ParseCommandString(char* command, int& argc, char** argv)
 	{
 
 		argc = 0;
