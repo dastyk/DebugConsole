@@ -14,6 +14,9 @@ int main()
 	DebugUtils::ConsoleThread::ShowConsole();
 	
 
+	while (true);
+
+
 	DebugUtils::ConsoleThread::Shutdown();
 	return 0;
 }

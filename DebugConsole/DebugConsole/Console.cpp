@@ -78,7 +78,7 @@ namespace DebugUtils
 		{
 			uint32_t hash = std::hash<std::string>{}(argv[0]);
 
-			auto& find = _commands.find(hash);
+			auto find = _commands.find(hash);
 			if (find != _commands.end()) {
 				for (int i = 1; i < argc; i++) {
 					if (argv[i][0] == '-') {
@@ -92,7 +92,7 @@ namespace DebugUtils
 			}
 			else
 			{
-				_commands[0].commandFunction(find->second.userData, argc, argv);
+				_commands[0].commandFunction(argv[0], argc, argv);
 			}
 		}
 

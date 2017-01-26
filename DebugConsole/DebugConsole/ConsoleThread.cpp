@@ -76,13 +76,13 @@ namespace DebugUtils
 
 	const void ConsoleThread::AddCommand(const char* identifier, const DebugConsole::Command_Structure * command)
 	{
-		_instance->AddCommand(identifier, command);
+		_instance->_console.AddCommand(identifier, command);
 		return void();
 	}
 
 	const void ConsoleThread::AddCommand(uint32_t identifier, const DebugConsole::Command_Structure * command)
 	{
-		_instance->AddCommand(identifier, command);
+		_instance->_console.AddCommand(identifier, command);
 		return void();
 	}
 
