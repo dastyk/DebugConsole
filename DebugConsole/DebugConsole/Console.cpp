@@ -157,9 +157,21 @@ namespace DebugUtils
 		{
 			if (std::string(arg) == std::string(argv[i]))
 			{	
-				if(data)
-					*data = argv[i + 1];
 				found = true;
+				if (data)
+				{
+					if (i + 1 < argc)
+					{
+						*data = argv[i + 1];
+					}
+					else
+					{
+						found = false;
+					}
+					
+				}
+					
+				
 				break;
 			}
 		}
