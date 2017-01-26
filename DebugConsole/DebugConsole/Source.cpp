@@ -7,7 +7,9 @@ int main()
 	{ 
 		nullptr,
 		[](void* userData, int argc, char** argv) {std::cout << "Command not found: " << argv[0] << std::endl; },
-		[](void* userData,int argc, char** argv) {}
+		[](void* userData,int argc, char** argv) {},
+		"",
+		""
 	};
 
 	DebugUtils::ConsoleThread::Init(&def);
