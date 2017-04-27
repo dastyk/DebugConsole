@@ -28,7 +28,7 @@ namespace DebugUtils
 			"Lists all available commands"
 		};
 
-		AddCommand(&commandsCmd);
+		_commands[0] = commandsCmd;
 
 
 		return void();
