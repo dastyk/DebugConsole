@@ -12,6 +12,9 @@ int main()
 	};
 
 	DebugUtils::ConsoleThread::Init();
+
+	DebugUtils::ConsoleThread::AddCommand(&def);
+
 	DebugUtils::ConsoleThread::ShowConsole();
 	
 

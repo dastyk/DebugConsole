@@ -90,7 +90,7 @@ namespace DebugUtils
 			}
 			else
 			{
-				_commands[0].commandFunction(argv[0], argc, argv);
+				_commands[0].commandFunction(_commands[0].userData, argc, argv);
 			}
 		}
 
