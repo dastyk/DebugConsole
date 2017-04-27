@@ -13,28 +13,19 @@ namespace DebugUtils
 	}
 
 	/*Copies the default Command Functions to the 0 slot in the commands map*/
-	const void DebugConsole::Init(const Command_Structure* defaultCommandFunctions)
+	const void DebugConsole::Init()
 	{
-#ifdef _DEBUG
-		if (defaultCommandFunctions->commandFunction == nullptr)
-			throw std::exception("Invalid command function pointer.");
-		if (defaultCommandFunctions->commandHelpFunction == nullptr)
-			throw std::exception("Invalid command help function pointer.");
-#endif
-		_commands[0] = *defaultCommandFunctions;
-		
 		Command_Structure commandsCmd = 
 		{
 			this,
 			[](void* userData, int argc, char** argv) {
 			for (auto& c : static_cast<DebugConsole*>(userData)->_commands)
 			{
-				printf("%s - %s\n", c.second.name, c.second.description);
+				printf("%s \t-\t %s\n", c.second.name, c.second.description);
 			}
 		},
-			[](void* userData, int argc, char** argv) {printf("%s", argv[0]); },
 			"commands",
-			"Lists all available commands\n"
+			"Lists all available commands"
 		};
 
 		AddCommand(&commandsCmd);
@@ -60,9 +51,7 @@ namespace DebugUtils
 		
 			
 		_commands[hash] = *command;
-		if (command->commandHelpFunction == nullptr)
-			_commands[hash].commandHelpFunction = _commands[0].commandHelpFunction;
-		
+
 		return void();
 	}
 	/* Adds the command with the already hashed identifer*/
@@ -76,8 +65,6 @@ namespace DebugUtils
 
 
 		_commands[identifier] = *command;
-		if (command->commandHelpFunction == nullptr)
-			_commands[identifier].commandHelpFunction = _commands[0].commandHelpFunction;
 
 
 		return void();
@@ -99,11 +86,6 @@ namespace DebugUtils
 			auto find = _commands.find(hash);
 			if (find != _commands.end()) {
 
-				if (GetArg("-h", nullptr, argc, argv)) {
-					argv[0] = find->second.description;
-					find->second.commandHelpFunction(find->second.userData, argc, argv);
-					return;
-				}
 				find->second.commandFunction(find->second.userData, argc, argv);
 			}
 			else

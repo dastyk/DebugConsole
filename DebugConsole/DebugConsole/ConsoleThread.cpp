@@ -8,18 +8,10 @@ namespace DebugUtils
 
 	ConsoleThread* ConsoleThread::_instance = nullptr;
 
-	ConsoleThread::ConsoleThread(const DebugConsole::Command_Structure* defaultCommandFunctions)
+	ConsoleThread::ConsoleThread()
 	{
-		_console.Init(defaultCommandFunctions);
-		DebugConsole::Command_Structure hideConsole =
-		{
-			&_running,
-			[](void* userData, int argc, char** argv) {*static_cast<bool*>(userData) = false; },
-			nullptr,
-			"hide",
-			"Hides the console window."
-		};
-		_console.AddCommand(&hideConsole);
+		_console.Init();
+
 	}
 
 
@@ -43,10 +35,10 @@ namespace DebugUtils
 		return void();
 	}
 
-	const void ConsoleThread::Init(const DebugConsole::Command_Structure * defaultCommandFunctions)
+	const void ConsoleThread::Init()
 	{
 		if (!_instance)
-			_instance = new ConsoleThread(defaultCommandFunctions);
+			_instance = new ConsoleThread();
 
 
 		return void();

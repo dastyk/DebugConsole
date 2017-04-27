@@ -10,7 +10,7 @@ namespace DebugUtils
 	{
 	private:
 		static ConsoleThread* _instance;
-		ConsoleThread(const DebugConsole::Command_Structure* defaultCommandFunctions);
+		ConsoleThread();
 		~ConsoleThread();
 		DebugConsole _console;
 		bool _running;
@@ -20,7 +20,7 @@ namespace DebugUtils
 		/* Initiates the DebugConsole
 		* Parameter is the default function to call if a interpreted command does not exist.
 		*/
-		static const void Init(const DebugConsole::Command_Structure* defaultCommandFunctions);
+		static const void Init();
 		/* Shutdown the DebugConsole*/
 		static const void Shutdown();
 		/*Show the DebugConsole*/

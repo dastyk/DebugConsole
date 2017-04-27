@@ -20,7 +20,6 @@ namespace DebugUtils
 		{
 			void* userData;
 			DebugConsole_Command_Function_Pointer commandFunction;
-			DebugConsole_Command_Function_Pointer commandHelpFunction;
 			char* name;
 			char* description;
 		};
@@ -34,7 +33,7 @@ namespace DebugUtils
 		/* Initiates the DebugConsole
 		* Parameter is the default function to call if a interpreted command does not exist.
 		*/
-		const void Init(const Command_Structure* defaultCommandFunctions);
+		const void Init();
 		/* Shutdown the DebugConsole*/
 		const void Shutdown();
 		/* Add a new command to the DebugConsole
